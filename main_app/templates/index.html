@@ -1,0 +1,74 @@
+{% load static%}
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+      integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+    <title>Tedious Tasks</title>
+  </head>
+  <body>
+    <h1>Tedious Tasks</h1>
+    <ul>
+      {% if task_list|length == 0 %}
+      <h3>No Tasks Exist</h3>
+      {% else %}
+      <table class="pure-table pure-table-striped">
+        <tr>
+          <th>Description</th>
+          <th>Time</th>
+          <th>Person</th>
+          <th>Delete</th>
+        </tr>
+        {% for task in task_list %}
+        <tr>
+          <td>{{ task.description }}</td>
+          <td>{{ task.time }}</td>
+          <td>{{ task.person }}</td>
+          <td><a href="{% url 'delete_task' task.id %}">X</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endif %}
+    </ul>
+
+    <hr />
+    <h4>Add Task</h4>
+    <form class="pure-form" method="POST" action="{% url 'tasks_create' %}">
+      {% csrf_token %}
+      <table>
+        {{ tasks_form.as_table}}
+        <label for="Description"
+          >Description:{{ task.description }}<input
+            type="text"
+            name="description"
+        /></label>
+        <br />
+        <label for="Time"
+          >Time:{{ task.time }}<input type="number" name="time"
+        /></label>
+        <br />
+        <label for="Person"
+          >Person:{{ task.person }} <input type="text" name="person"
+        /></label>
+        <br />
+      </table>
+      <input class="pure-button" type="submit" value="Add!" />
+    </form>
+    <br />
+  </body>
+</html>
