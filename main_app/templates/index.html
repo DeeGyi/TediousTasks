@@ -51,7 +51,7 @@
     <form class="pure-form" method="POST" action="{% url 'tasks_create' %}">
       {% csrf_token %}
       <table>
-        {{ tasks_form.as_table}}
+        {{ form.as_table}}
         <label for="Description"
           >Description:{{ task.description }}<input
             type="text"
