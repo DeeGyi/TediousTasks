@@ -24,7 +24,7 @@ def home(request):
 
 
 def tasks(request):
-    tasks = Task.objects.all()
+    tasks_list = Task.objects.all()
     form = TaskForm()
 
     if request.method == 'POST':
@@ -33,7 +33,7 @@ def tasks(request):
             form.save() 
         return redirect('/')
 
-    context = {'tasks': tasks, 'form': form}
+    context = {'tasks_list': tasks_list, 'form': form}
     return render(request, 'index.html', context)
 
 
